@@ -22,7 +22,7 @@ from testrunner import run_tests
 default_testcommand = "setup.py test"
 default_interpreter = "python"
 default_interpreter3 = "python3"
-default_proto = 'https'
+default_proto = 'http'
 
 def main():
     parser = OptionParser(usage="""\
@@ -71,9 +71,9 @@ Commands:
             action="store_false", default=True, dest="comment",
             help="Don't submit a summary comment to the pull request (but still upload the test report).")
     parser.add_option("-p", "--protocol",
-            type='choice', choices=['https', 'git',],
-            action="store", default="https", dest="proto",
-            help="Choose git protocol if https failed")
+            type='choice', choices=['http', 'git',],
+            action="store", default="http", dest="proto",
+            help="Choose git protocol if http failed")
 
 
     options, args = parser.parse_args()
@@ -191,7 +191,7 @@ See the report for a list of the merge conflicts.""" % atuser
 Test results html report: %s
 
 %s
-Automatic review by [SymPy Bot](https://github.com/sympy/sympy-bot).""" % \
+Automatic review by [SymPy Bot](http://github.com/sympy/sympy-bot).""" % \
     (summary, report_url, details,)
 
     return report
@@ -295,7 +295,7 @@ def review(n, config, **kwargs):
             config.repository) % tmpdir)
 
     print "> Testing..."
-    result = run_tests(format_repo("https://github.com/{repo}.git",
+    result = run_tests(format_repo("http://github.com/{repo}.git",
         config.repository),
             repo, branch, tmpdir + "/sympy", config.testcommand,
             config.interpreter, config.python3, config.master_commit)
@@ -347,7 +347,7 @@ def review(n, config, **kwargs):
         github_add_comment_to_pull_request(config.repository, n, review,
                 username, password)
         print ">     Done."
-        print format_repo("> Check the results: https://github.com/{repo}/pull/%d", config.repository) % n
+        print format_repo("> Check the results: http://github.com/{repo}/pull/%d", config.repository) % n
     print "> Merged pull request available in: %s" % tmpdir
 
 if __name__ == "__main__":
